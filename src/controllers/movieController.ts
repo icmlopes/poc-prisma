@@ -41,20 +41,20 @@ export async function getMovies(req: Request, res: Response) {
     }
 }
 
-// export async function getMoviesById(req: Request, res: Response) {
-//     const id = Number(req.params.id)
+export async function getMoviesById(req: Request, res: Response) {
+    const id = Number(req.params.id)
 
-//     try { 
+    try { 
 
-//         const getByid = await R.getMovieById(id)
+        const getByid = await R.getMovieById(id)
 
-//         return res.status(200).send(getByid.rows)
+        return res.status(200).send(getByid)
 
-//     } catch (error) {
-//         console.log(error)
-//         return res.sendStatus(500)
-//     }
-// }
+    } catch (error) {
+        console.log(error)
+        return res.sendStatus(500)
+    }
+}
 
 // export async function status(req: Request, res: Response) {
 //     const id = Number(req.params.id)

@@ -40,14 +40,17 @@ import prisma from "../database/db.js";
 //    return await connection.query(`
 //     INSERT INTO movie (title, genres, platform, watched, comment) VALUES ($1, $2, $3, false, null)`, [movie.title, movie.genres, movie.platform])
 // }
-// export async function getAllMovies(): Promise<QueryResult<string[]>>{
-//     return await connection.query(`
-//     SELECT * FROM movie`)
-// }
 export function getAllMovies() {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             return [2 /*return*/, prisma.movie.findMany()];
+        });
+    });
+}
+export function getMovieById(id) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            return [2 /*return*/, prisma.movie.findFirst()];
         });
     });
 }

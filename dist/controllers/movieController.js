@@ -71,16 +71,29 @@ export function getMovies(req, res) {
         });
     });
 }
-// export async function getMoviesById(req: Request, res: Response) {
-//     const id = Number(req.params.id)
-//     try { 
-//         const getByid = await R.getMovieById(id)
-//         return res.status(200).send(getByid.rows)
-//     } catch (error) {
-//         console.log(error)
-//         return res.sendStatus(500)
-//     }
-// }
+export function getMoviesById(req, res) {
+    return __awaiter(this, void 0, void 0, function () {
+        var id, getByid, error_2;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    id = Number(req.params.id);
+                    _a.label = 1;
+                case 1:
+                    _a.trys.push([1, 3, , 4]);
+                    return [4 /*yield*/, R.getMovieById(id)];
+                case 2:
+                    getByid = _a.sent();
+                    return [2 /*return*/, res.status(200).send(getByid)];
+                case 3:
+                    error_2 = _a.sent();
+                    console.log(error_2);
+                    return [2 /*return*/, res.sendStatus(500)];
+                case 4: return [2 /*return*/];
+            }
+        });
+    });
+}
 // export async function status(req: Request, res: Response) {
 //     const id = Number(req.params.id)
 //     const getComment = req.body 

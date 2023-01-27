@@ -9,13 +9,12 @@ import prisma from "../database/db.js";
 //     INSERT INTO movie (title, genres, platform, watched, comment) VALUES ($1, $2, $3, false, null)`, [movie.title, movie.genres, movie.platform])
 // }
 
-// export async function getAllMovies(): Promise<QueryResult<string[]>>{
-//     return await connection.query(`
-//     SELECT * FROM movie`)
-// }
-
 export async function getAllMovies(){
     return prisma.movie.findMany();
+}
+
+export async function getMovieById(id: number){
+    return prisma.movie.findFirst()
 }
 
 // export async function getMovieById(id: number): Promise<QueryResult<string[]>>{
