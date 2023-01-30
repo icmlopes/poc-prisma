@@ -4,28 +4,29 @@ import { movieSchema } from "../model/movieSchema.js"
 import * as R from "../repositories/movieRepository.js"
 import { QueryArrayResult } from "pg"
 
-// export async function postNewMovie(req: Request, res: Response) {
 
-//     const newMovie = req.body as Movie
+export async function postNewMovie(req: Request, res: Response) {
 
-//     const { error } = movieSchema.validate(newMovie)
+    const { title, genre, platform } = req.body as Movie
 
-//     if (error) {
-//         return res.status(400).send({
-//             message: error.message
-//         })
-//     }
+    const { error } = movieSchema.validate({title, genre, platform})
 
-//     try {
+    if (error) {
+        return res.status(400).send({
+            message: error.message
+        })
+    }
 
-//         await R.insertMovie(newMovie)
+    try {
 
-//     } catch (error) {
-//         console.log(error);
-//         return res.sendStatus(500)
-//     }
-//     res.sendStatus(200)
-// }
+        await R.insertMovie(title, genre, platform)
+
+    } catch (error) {
+        console.log(error);
+        return res.sendStatus(500)
+    }
+    res.sendStatus(200)
+}
 
 export async function getMovies(req: Request, res: Response) {
 
@@ -82,26 +83,26 @@ export async function getMoviesById(req: Request, res: Response) {
 
 // }
 
-// export async function deleteMovie(req: Request, res: Response){
-//     const id = Number(req.params.id)
+export async function deleteMovie(req: Request, res: Response){
+    const id = Number(req.params.id)
 
-//     try{
+    try{
 
-//         const getMovieId = await R.getMovieById(id)
+        const getMovieId = await R.getMovieById(id)
 
-//         if (getMovieId.rowCount === 0){
-//             return res.status(404).send("Filme não encontrado")
-//         }
+        if (!getMovieId.id){
+            return res.status(404).send("Filme não encontrado")
+        }
 
-//         await R.deleteMovieById(id)
+        await R.deleteMovieById(id)
 
-//         return res.status(200).send("Filme deletado com sucesso.")
+        return res.status(200).send("Filme deletado com sucesso.")
 
-//     } catch (error){
-//         console.log(error)
-//         return res.sendStatus(500)
-//     }
-// }
+    } catch (error){
+        console.log(error)
+        return res.sendStatus(500)
+    }
+}
 
 // export async function getRanking(req: Request, res: Response){
 

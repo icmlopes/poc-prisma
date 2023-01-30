@@ -7,7 +7,17 @@ import prisma from "../database/db.js";
 //     console.log(movie)
 //    return await connection.query(`
 //     INSERT INTO movie (title, genres, platform, watched, comment) VALUES ($1, $2, $3, false, null)`, [movie.title, movie.genres, movie.platform])
-// }
+// }   
+
+export async function insertMovie(title: string, genre: string, platform: string){
+       return await prisma.movie.create({
+        data: {
+            title,
+            genre,
+            platform
+        }
+       })
+    }   
 
 export async function getAllMovies(){
     return prisma.movie.findMany();
@@ -20,12 +30,19 @@ export async function getMovieById(id: number){
 // export async function getMovieById(id: number): Promise<QueryResult<string[]>>{
 //     return await connection.query(`
 //     SELECT * FROM movie WHERE id = $1`, [id] )
-// }
+// }  
 
 // export async function updateStatus(comment: string, id: number): Promise<QueryResult>{
 //     return await connection.query(`UPDATE movie SET watched = true, comment = $1 WHERE id = $2
 //     `, [comment, id])
 // }
+
+
+export async function deleteMovieById(id: number){
+    await prisma.movie.findUnique({
+        where: {id}
+    })
+}
 
 // export async function deleteMovieById(id: number): Promise<QueryResult>{
 //     return await connection.query(`

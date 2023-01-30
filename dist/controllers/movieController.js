@@ -34,26 +34,42 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+import { movieSchema } from "../model/movieSchema.js";
 import * as R from "../repositories/movieRepository.js";
-// export async function postNewMovie(req: Request, res: Response) {
-//     const newMovie = req.body as Movie
-//     const { error } = movieSchema.validate(newMovie)
-//     if (error) {
-//         return res.status(400).send({
-//             message: error.message
-//         })
-//     }
-//     try {
-//         await R.insertMovie(newMovie)
-//     } catch (error) {
-//         console.log(error);
-//         return res.sendStatus(500)
-//     }
-//     res.sendStatus(200)
-// }
+export function postNewMovie(req, res) {
+    return __awaiter(this, void 0, void 0, function () {
+        var _a, title, genre, platform, error, error_1;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    _a = req.body, title = _a.title, genre = _a.genre, platform = _a.platform;
+                    error = movieSchema.validate({ title: title, genre: genre, platform: platform }).error;
+                    if (error) {
+                        return [2 /*return*/, res.status(400).send({
+                                message: error.message
+                            })];
+                    }
+                    _b.label = 1;
+                case 1:
+                    _b.trys.push([1, 3, , 4]);
+                    return [4 /*yield*/, R.insertMovie(title, genre, platform)];
+                case 2:
+                    _b.sent();
+                    return [3 /*break*/, 4];
+                case 3:
+                    error_1 = _b.sent();
+                    console.log(error_1);
+                    return [2 /*return*/, res.sendStatus(500)];
+                case 4:
+                    res.sendStatus(200);
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
 export function getMovies(req, res) {
     return __awaiter(this, void 0, void 0, function () {
-        var existingMovies, error_1;
+        var existingMovies, error_2;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -63,8 +79,8 @@ export function getMovies(req, res) {
                     existingMovies = _a.sent();
                     return [2 /*return*/, res.status(200).send(existingMovies)];
                 case 2:
-                    error_1 = _a.sent();
-                    console.log(error_1);
+                    error_2 = _a.sent();
+                    console.log(error_2);
                     return [2 /*return*/, res.sendStatus(500)];
                 case 3: return [2 /*return*/];
             }
@@ -73,7 +89,7 @@ export function getMovies(req, res) {
 }
 export function getMoviesById(req, res) {
     return __awaiter(this, void 0, void 0, function () {
-        var id, getByid, error_2;
+        var id, getByid, error_3;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -86,8 +102,8 @@ export function getMoviesById(req, res) {
                     getByid = _a.sent();
                     return [2 /*return*/, res.status(200).send(getByid)];
                 case 3:
-                    error_2 = _a.sent();
-                    console.log(error_2);
+                    error_3 = _a.sent();
+                    console.log(error_3);
                     return [2 /*return*/, res.sendStatus(500)];
                 case 4: return [2 /*return*/];
             }
@@ -111,20 +127,35 @@ export function getMoviesById(req, res) {
 //         return res.sendStatus(500)
 //     }
 // }
-// export async function deleteMovie(req: Request, res: Response){
-//     const id = Number(req.params.id)
-//     try{
-//         const getMovieId = await R.getMovieById(id)
-//         if (getMovieId.rowCount === 0){
-//             return res.status(404).send("Filme não encontrado")
-//         }
-//         await R.deleteMovieById(id)
-//         return res.status(200).send("Filme deletado com sucesso.")
-//     } catch (error){
-//         console.log(error)
-//         return res.sendStatus(500)
-//     }
-// }
+export function deleteMovie(req, res) {
+    return __awaiter(this, void 0, void 0, function () {
+        var id, getMovieId, error_4;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    id = Number(req.params.id);
+                    _a.label = 1;
+                case 1:
+                    _a.trys.push([1, 4, , 5]);
+                    return [4 /*yield*/, R.getMovieById(id)];
+                case 2:
+                    getMovieId = _a.sent();
+                    if (!getMovieId.id) {
+                        return [2 /*return*/, res.status(404).send("Filme não encontrado")];
+                    }
+                    return [4 /*yield*/, R.deleteMovieById(id)];
+                case 3:
+                    _a.sent();
+                    return [2 /*return*/, res.status(200).send("Filme deletado com sucesso.")];
+                case 4:
+                    error_4 = _a.sent();
+                    console.log(error_4);
+                    return [2 /*return*/, res.sendStatus(500)];
+                case 5: return [2 /*return*/];
+            }
+        });
+    });
+}
 // export async function getRanking(req: Request, res: Response){
 //     try{
 //         const ranking = await R.platformCount()

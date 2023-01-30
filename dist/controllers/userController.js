@@ -34,70 +34,34 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import prisma from "../database/db.js";
-// export async function insertMovie(movie: Movie): Promise<QueryResult>{
-//     console.log(movie)
-//    return await connection.query(`
-//     INSERT INTO movie (title, genres, platform, watched, comment) VALUES ($1, $2, $3, false, null)`, [movie.title, movie.genres, movie.platform])
-// }   
-export function insertMovie(title, genre, platform) {
+import bcrypt from '@prisma/client';
+import * as R from "../repositories/userRepository.js";
+export function postSignUp(req, res) {
     return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, prisma.movie.create({
-                        data: {
-                            title: title,
-                            genre: genre,
-                            platform: platform
-                        }
-                    })];
-                case 1: return [2 /*return*/, _a.sent()];
-            }
-        });
-    });
-}
-export function getAllMovies() {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            return [2 /*return*/, prisma.movie.findMany()];
-        });
-    });
-}
-export function getMovieById(id) {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            return [2 /*return*/, prisma.movie.findFirst()];
-        });
-    });
-}
-// export async function getMovieById(id: number): Promise<QueryResult<string[]>>{
-//     return await connection.query(`
-//     SELECT * FROM movie WHERE id = $1`, [id] )
-// }  
-// export async function updateStatus(comment: string, id: number): Promise<QueryResult>{
-//     return await connection.query(`UPDATE movie SET watched = true, comment = $1 WHERE id = $2
-//     `, [comment, id])
-// }
-export function deleteMovieById(id) {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, prisma.movie.findUnique({
-                        where: { id: id }
-                    })];
+        var _a, name, email, password, passwordHashed, newUser, err_1;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    _a = req.body, name = _a.name, email = _a.email, password = _a.password;
+                    passwordHashed = bcrypt.hashSync(password, 10);
+                    _b.label = 1;
                 case 1:
-                    _a.sent();
-                    return [2 /*return*/];
+                    _b.trys.push([1, 3, , 4]);
+                    return [4 /*yield*/, R.addUser(name, email, passwordHashed)];
+                case 2:
+                    newUser = _b.sent();
+                    // if (newUser === 0) {
+                    // 	res.sendStatus(502);
+                    // }
+                    res.sendStatus(201);
+                    return [3 /*break*/, 4];
+                case 3:
+                    err_1 = _b.sent();
+                    console.log(err_1);
+                    return [3 /*break*/, 4];
+                case 4: return [2 /*return*/];
             }
         });
     });
 }
-// export async function deleteMovieById(id: number): Promise<QueryResult>{
-//     return await connection.query(`
-//     DELETE FROM movie WHERE id = $1
-//     `, [id])
-// }
-// export async function platformCount():Promise<QueryResult<string[]>>{
-//     return await connection.query(`
-//     SELECT platform, COUNT(*) FROM movie GROUP BY platform ORDER BY count DESC`)
 // }

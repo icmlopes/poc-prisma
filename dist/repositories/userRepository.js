@@ -35,69 +35,16 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 import prisma from "../database/db.js";
-// export async function insertMovie(movie: Movie): Promise<QueryResult>{
-//     console.log(movie)
-//    return await connection.query(`
-//     INSERT INTO movie (title, genres, platform, watched, comment) VALUES ($1, $2, $3, false, null)`, [movie.title, movie.genres, movie.platform])
-// }   
-export function insertMovie(title, genre, platform) {
+export function addUser(name, email, password) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, prisma.movie.create({
-                        data: {
-                            title: title,
-                            genre: genre,
-                            platform: platform
-                        }
-                    })];
-                case 1: return [2 /*return*/, _a.sent()];
-            }
+            return [2 /*return*/, prisma.client.create({
+                    data: {
+                        name: name,
+                        email: email,
+                        password: password
+                    }
+                })];
         });
     });
 }
-export function getAllMovies() {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            return [2 /*return*/, prisma.movie.findMany()];
-        });
-    });
-}
-export function getMovieById(id) {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            return [2 /*return*/, prisma.movie.findFirst()];
-        });
-    });
-}
-// export async function getMovieById(id: number): Promise<QueryResult<string[]>>{
-//     return await connection.query(`
-//     SELECT * FROM movie WHERE id = $1`, [id] )
-// }  
-// export async function updateStatus(comment: string, id: number): Promise<QueryResult>{
-//     return await connection.query(`UPDATE movie SET watched = true, comment = $1 WHERE id = $2
-//     `, [comment, id])
-// }
-export function deleteMovieById(id) {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, prisma.movie.findUnique({
-                        where: { id: id }
-                    })];
-                case 1:
-                    _a.sent();
-                    return [2 /*return*/];
-            }
-        });
-    });
-}
-// export async function deleteMovieById(id: number): Promise<QueryResult>{
-//     return await connection.query(`
-//     DELETE FROM movie WHERE id = $1
-//     `, [id])
-// }
-// export async function platformCount():Promise<QueryResult<string[]>>{
-//     return await connection.query(`
-//     SELECT platform, COUNT(*) FROM movie GROUP BY platform ORDER BY count DESC`)
-// }
